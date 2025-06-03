@@ -1,101 +1,220 @@
-
-#gamebord{
-    margin: 0px 0px 0px 550px;
-    width: 30%;
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* A more playful font */
+    background: linear-gradient(135deg, #f06d06, #f39237); /* A vibrant background gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Prevent scroll issues with animations */
 }
+
+#gamebord {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Softer, more pronounced shadow */
+    position: relative;
+    z-index: 1; /* Ensure it's above other elements */
+}
+
 #game {
-    background-color: #0eeb93;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-color: #4CAF50; /* A pleasant green */
     display: grid;
-    grid-template-columns: repeat(3, auto);
-    margin:40px 30px 40px 20px;
-    padding: 10px 10px 10px 10px;
-    border-radius: 30px;
+    grid-template-columns: repeat(3, 100px); /* Keep cell size consistent */
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px; /* Small gap between cells */
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
 }
 
-.grid-cell:nth-child(-n + 3) {
-    border-top: none;
-}
-
-.grid-cell:nth-child(3n + 1) {
-    border-left: none;
-}
-
-.grid-cell:nth-child(3n + 3) {
-    border-right: none;
-}
-
-.grid-cell:nth-last-of-type(-n + 3) {
-    border-bottom: none;
-}
-.x::after {
-    content: 'X';
-}
-
-.o::after {
-    content:  'O';
-}
 .grid-cell {
-    border: 3px solid #000;
+    border: 3px solid #388E3C; /* Darker green border */
     width: 100px;
     height: 100px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 28px;
+    font-size: 60px; /* Larger font for X/O */
+    font-weight: bold;
+    color: #fff; /* White X/O for contrast */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Text shadow for pop */
+    transition: background-color 0.3s ease, transform 0.2s ease-out; /* Smooth transitions */
 }
+
+.grid-cell:nth-child(-n + 3) { border-top: none; }
+.grid-cell:nth-child(3n + 1) { border-left: none; }
+.grid-cell:nth-child(3n + 3) { border-right: none; }
+.grid-cell:nth-last-of-type(-n + 3) { border-bottom: none; }
+
+.x::after, .o::after {
+    display: block;
+    animation: cell-fade-in 0.5s ease-out forwards; /* Animation for X and O appearance */
+}
+
+.x::after {
+    content: 'X';
+    color: #FFEB3B; /* Yellow for X */
+}
+
+.o::after {
+    content: 'O';
+    color: #2196F3; /* Blue for O */
+}
+
+@keyframes cell-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .disabled {
     cursor: not-allowed;
+    opacity: 0.8;
 }
 
 .grid-cell:not(.disabled):hover {
-    background: #d5cfd9;
+    background: rgba(255, 255, 255, 0.3); /* Lighter hover effect */
     border-radius: 15px;
-    opacity: 20%;
+    transform: scale(1.05); /* Slightly enlarge on hover */
 }
+
+.info_sec {
+    width: 100%;
+    text-align: center;
+    margin-top: 25px;
+    background-color: #64B5F6; /* Lighter blue */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Info section shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.info_sec h1 {
+    color: #fff;
+    margin: 0;
+    font-size: 2em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.Info {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #FFE0B2; /* Orange for turn info */
+    background: rgba(0, 0, 0, 0.2); /* Subtle background for turn info */
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.button_modif {
+    background-color: #FFC107; /* A bright yellow */
+    color: #333;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Float removed to better integrate with flex layout */
+    margin-bottom: 10px; /* Space from other elements */
+}
+
+.button_modif:hover {
+    background-color: #FFA000; /* Darker yellow on hover */
+    transform: translateY(-3px); /* Lift button on hover */
+}
+
 .game-over {
     display: none;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: rgb(0 0 0 / 50%) 0 0 0 9999px;
+    transform: translate(-50%, -50%) scale(0.8); /* Start slightly smaller */
+    background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7); /* Full screen dimming effect */
+    z-index: 10;
+    text-align: center;
+    animation: zoom-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; /* Exciting zoom-in */
+}
+
+@keyframes zoom-in {
+    from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
 }
 
 .game-over-text {
-    position: absolute;
-    top: -200px;
     font-size: 60px;
-    font-family: sans-serif;
+    font-family: 'Bubblegum Sans', cursive, sans-serif; /* A fun, bold font */
     font-weight: bold;
-    text-align: center;
-    transform: translateX(-30%);
+    color: #E91E63; /* Pink for game over */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    display: block; /* Ensure it takes full width */
+    text-transform: uppercase; /* Make champion message more prominent */
+    letter-spacing: 3px;
+}
+
+.game-over .restart {
+    background-color: #8BC34A; /* Green restart button */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.game-over .restart:hover {
+    background-color: #689F38; /* Darker green on hover */
+    transform: translateY(-3px);
 }
 
 .visible {
     display: block;
 }
 
-.Info{
-    margin-left: 20px;
-    padding: 20px;
+/* --- New Styles for Score Display --- */
+.score-container {
     display: flex;
-    background: #00f995;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f7e0e7; /* Light pink background */
+    border-radius: 10px;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
 }
-.info_sec{
-    margin-left: 20px;
-    padding: 20px;
-    background-color: rgb(0, 255, 255);
-    padding-bottom: 30px;
-}
-.button_modif{
-    background-color: rgb(30, 108, 210);
-    border-radius: 40%;
-    padding: 10px 10px 10px 10px;
-    display: flex;
-    float: right;
+
+.player-score {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #4A148C; /* Deep purple text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
