@@ -59,5 +59,5 @@ To get a local copy up and running, follow these simple steps:
 
 ## 📸 Screenshots
 
-### 🏠 Home Page
+### Game Dashboard
 ![Game Dashboard](home.png)
